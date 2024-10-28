@@ -1,5 +1,5 @@
 # Advanced JavaScript Interview Questions and Answers
-My Advanced JavaScript Interview Prep A personal repository of JavaScript interview questions and solutions to help you solidify my understanding of advanced concepts.
+My Advanced JavaScript Interview Prep : A personal repository of JavaScript interview questions and solutions to help you solidify my understanding of advanced concepts.
 
 <link rel="stylesheet" href="style.css">
 
@@ -30,8 +30,5 @@ My Advanced JavaScript Interview Prep A personal repository of JavaScript interv
    // Output:
    // Outer Variable: outside
    // Inner Variable: inside
-<button class="symbol-button" onclick="copyToClipboard('#closure-code')">📋 Copy Code</button> <button class="symbol-button" onclick="runCode('#closure-code')">▶️ Run Code</button>
 
-<button class="symbol-button" onclick="scrollToTop()">⬆ Back to Top</button>
-
-<script src="script.js"></script>
+ **[⬆ Back to Top](#table-of-contents)**
