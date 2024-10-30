@@ -10,6 +10,25 @@ My Advanced JavaScript Interview Prep : A personal repository of JavaScript inte
 | No. | Questions |
 | --- | --------- |
 | 1 | [What is a closure in JavaScript and how is it used?](#what-is-a-closure-in-javascript-and-how-is-it-used) |
+| 2 | [What is the event loop in JavaScript?](#what-is-the-event-loop-in-javascript) |
+| 3 | [Describe the difference between == and === in JavaScript.](#describe-the-difference-between--and--in-javascript) |
+| 4 | [What are Promises and how do they work?](#what-are-promises-and-how-do-they-work) |
+| 5 | [What is the purpose of the async and await keywords in JavaScript?](#what-is-the-purpose-of-the-async-and-await-keywords-in-javascript) |
+| 6 | [Explain the concept of 'hoisting' in JavaScript.](#explain-the-concept-of-hoisting-in-javascript) |
+| 7 | [What are JavaScript modules and how do they work?](#what-are-javascript-modules-and-how-do-they-work) |
+| 8 | [What is a Proxy in JavaScript, and how can it be used?](#what-is-a-proxy-in-javascript-and-how-can-it-be-used) |
+| 9 | [What is the bind() method in JavaScript?](#what-is-the-bind-method-in-javascript) |
+| 10 | [Explain the concept of "debouncing" in JavaScript.](#explain-the-concept-of-debouncing-in-javascript) |
+| 11 | [What is the difference between let and var?](#what-is-the-difference-between-let-and-var) |
+| 12 | [What is the Symbol type and how is it used?](#what-is-the-symbol-type-and-how-is-it-used) |
+| 13 | [Explain the concept of "throttling" in JavaScript.](#explain-the-concept-of-throttling-in-javascript) |
+| 14 | [What is the purpose of the WeakMap in JavaScript?](#what-is-the-purpose-of-the-weakmap-in-javascript) |
+| 15 | [How does prototypal inheritance work in JavaScript?](#how-does-prototypal-inheritance-work-in-javascript) |
+| 16 | [What is the difference between call, apply, and bind?](#what-is-the-difference-between-call-apply-and-bind) |
+| 17 | [What are Generators in JavaScript?](#what-are-generators-in-javascript) |
+| 18 | [Explain the concept of "immutability" in JavaScript.](#explain-the-concept-of-immutability-in-javascript) |
+| 19 | [What is the purpose of the Reflect API in JavaScript?](#what-is-the-purpose-of-the-reflect-api-in-javascript) |
+| 20 | [Explain the concept of "destructuring" in JavaScript.](#explain-the-concept-of-destructuring-in-javascript) |
 
 ---
 
@@ -162,4 +181,160 @@ My Advanced JavaScript Interview Prep : A personal repository of JavaScript inte
     }, 250);
 
     window.addEventListener('resize', handleResize);
+ **[⬆ Back to Top](#table-of-contents)**
+
+11. ### What is the difference between let and var?
+
+    `let` has block scope, while `var` has function scope. `let` also doesn't hoist the same way `var` does.
+
+    ```javascript
+    if (true) {
+      let blockScope = 'I am block scoped';
+      var functionScope = 'I am function scoped';
+    }
+
+    console.log(functionScope); // "I am function scoped"
+    console.log(blockScope); // ReferenceError: blockScope is not defined
+    ```
+ **[⬆ Back to Top](#table-of-contents)**
+
+12. ### What is the Symbol type and how is it used?
+
+    Symbol is a primitive data type introduced in ES6. It is used to create unique identifiers.
+
+    ```javascript
+    const sym1 = Symbol('description');
+    const sym2 = Symbol('description');
+
+    console.log(sym1 === sym2); // false
+    ```
+ **[⬆ Back to Top](#table-of-contents)**
+
+13. ### Explain the concept of "throttling" in JavaScript.
+
+    Throttling ensures a function is called at most once in a specified period.
+
+    ```javascript
+    function throttle(func, limit) {
+      let inThrottle;
+      return function() {
+        const context = this, args = arguments;
+        if (!inThrottle) {
+          func.apply(context, args);
+          inThrottle = true;
+          setTimeout(() => inThrottle = false, limit);
+        }
+      };
+    }
+
+    const handleScroll = throttle(() => {
+      console.log('Scroll event handler');
+    }, 1000);
+
+    window.addEventListener('scroll', handleScroll);
+    ```
+ **[⬆ Back to Top](#table-of-contents)**
+
+14. ### What is the purpose of the WeakMap in JavaScript?
+
+    WeakMap is a collection of key/value pairs where keys are objects and values can be arbitrary values. The key objects are held weakly, meaning they can be garbage collected if no other references to them exist.
+
+    ```javascript
+    let obj = {};
+    const weakmap = new WeakMap();
+    weakmap.set(obj, 'value');
+    obj = null; // Now the object is eligible for garbage collection
+    ```
+ **[⬆ Back to Top](#table-of-contents)**
+
+15. ### How does prototypal inheritance work in JavaScript?
+
+    Objects in JavaScript can inherit properties from other objects via the prototype chain. Each object has a prototype property that refers to another object.
+
+    ```javascript
+    const parent = {
+      greet() {
+        console.log('Hello');
+      }
+    };
+
+    const child = Object.create(parent);
+    child.greet(); // "Hello"
+    ```
+ **[⬆ Back to Top](#table-of-contents)**
+
+16. ### What is the difference between call, apply, and bind?
+
+    `call` and `apply` invoke a function immediately with a specified `this` context. `call` accepts arguments one by one, while `apply` accepts arguments as an array. `bind` creates a new function with a specified `this` context and returns it without invoking it immediately.
+
+    ```javascript
+    function example(a, b) {
+      console.log(this.value, a, b);
+    }
+
+    const context = { value: 'Hello' };
+
+    example.call(context, 1, 2); // "Hello 1 2"
+    example.apply(context, [1, 2]); // "Hello 1 2"
+    const boundExample = example.bind(context, 1);
+    boundExample(2); // "Hello 1 2"
+    ```
+ **[⬆ Back to Top](#table-of-contents)**
+
+17. ### What are Generators in JavaScript?
+
+    Generators are functions that can be paused and resumed. They are denoted by `function*` and use the `yield` keyword to pause execution.
+
+    ```javascript
+    function* generatorFunction() {
+      yield 'Hello';
+      yield 'World';
+      return 'Done';
+    }
+
+    const generator = generatorFunction();
+    console.log(generator.next().value); // "Hello"
+    console.log(generator.next().value); // "World"
+    console.log(generator.next().value); // "Done"
+    ```
+ **[⬆ Back to Top](#table-of-contents)**
+
+18. ### Explain the concept of "immutability" in JavaScript.
+
+    Immutability refers to objects whose state cannot be modified after they are created. This is often achieved using techniques like `Object.freeze` or libraries like Immutable.js.
+
+    ```javascript
+    const obj = Object.freeze({name: 'John'});
+    obj.name = 'Doe'; // This will not change the object
+    console.log(obj.name); // "John"
+    ```
+ **[⬆ Back to Top](#table-of-contents)**
+
+19. ### What is the purpose of the Reflect API in JavaScript?
+
+    The Reflect API provides methods for interceptable JavaScript operations. It is designed to complement Proxies.
+
+    ```javascript
+    const obj = { name: 'John' };
+    console.log(Reflect.get(obj, 'name')); // "John"
+    Reflect.set(obj, 'name', 'Doe');
+    console.log(obj.name); // "Doe"
+    ```
+ **[⬆ Back to Top](#table-of-contents)**
+
+20. ### Explain the concept of "destructuring" in JavaScript.
+
+    Destructuring is a syntax that allows you to unpack values from arrays or properties from objects into distinct variables.
+
+    ```javascript
+    // Array Destructuring
+    const [a, b] = [1, 2];
+    console.log(a); // 1
+    console.log(b); // 2
+
+    // Object Destructuring
+    const { name, age } = { name: 'Alice', age: 25 };
+    console.log(name); // Alice
+    console.log(age); // 25
+    ```
  **[⬆ Back to Top](#table-of-contents)**
