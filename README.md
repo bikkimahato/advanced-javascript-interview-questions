@@ -29,6 +29,16 @@ My Advanced JavaScript Interview Prep : A personal repository of JavaScript inte
 | 18 | [Explain the concept of "immutability" in JavaScript.](#explain-the-concept-of-immutability-in-javascript) |
 | 19 | [What is the purpose of the Reflect API in JavaScript?](#what-is-the-purpose-of-the-reflect-api-in-javascript) |
 | 20 | [Explain the concept of "destructuring" in JavaScript.](#explain-the-concept-of-destructuring-in-javascript) |
+| 21. | [What is a "template literal" in JavaScript?](#what-is-a-template-literal-in-javascript) |
+| 22. | [What is the difference between Object.seal and Object.freeze?](#what-is-the-difference-between-objectseal-and-objectfreeze) |
+| 23. | [What is the purpose of the Map and Set objects in JavaScript?](#23-what-is-the-purpose-of-the-map-and-set-objects-in-javascript) |
+| 24. | [Explain the concept of "currying" in JavaScript.](#explain-the-concept-of-currying-in-javascript) |
+| 25. | [What is the Promise.all method used for?](#what-is-the-promiseall-method-used-for) |
+| 26. | [Explain the concept of "tail call optimization" in JavaScript.](#explain-the-concept-of-tail-call-optimization-in-javascript) |
+| 27. | [What is the purpose of the eval function in JavaScript?](#what-is-the-purpose-of-the-eval-function-in-javascript) |
+| 28. | [What is the asyncIterator protocol in JavaScript?](#what-is-the-asynciterator-protocol-in-javascript) |
+| 29. | [What is the purpose of the Intl object in JavaScript?](#what-is-the-purpose-of-the-intl-object-in-javascript) |
+| 30. | [Explain the concept of "event delegation" in JavaScript.](#explain-the-concept-of-event-delegation-in-javascript) |
 
 ---
 
@@ -336,5 +346,154 @@ My Advanced JavaScript Interview Prep : A personal repository of JavaScript inte
     const { name, age } = { name: 'Alice', age: 25 };
     console.log(name); // Alice
     console.log(age); // 25
+    ```
+ **[⬆ Back to Top](#table-of-contents)**
+
+21. ### What is a "template literal" in JavaScript?
+
+    Template literals are string literals allowing embedded expressions. They are enclosed by backticks (`).
+
+    ```javascript
+    const name = 'John';
+    const greeting = `Hello, ${name}!`;
+    console.log(greeting); // "Hello, John!"
+    ```
+ **[⬆ Back to Top](#table-of-contents)**
+
+22. ### What is the difference between Object.seal and Object.freeze?
+
+    `Object.seal` prevents new properties from being added and marks all existing properties as non-configurable. `Object.freeze` does the same but also makes all existing properties non-writable.
+
+    ```javascript
+    const obj = {name: 'John'};
+    Object.seal(obj);
+    obj.age = 30; // This will not add the age property
+
+    const frozenObj = {name: 'Doe'};
+    Object.freeze(frozenObj);
+    frozenObj.name = 'John'; // This will not change the name property
+    ```
+ **[⬆ Back to Top](#table-of-contents)**
+
+23. ### What is the purpose of the Map and Set objects in JavaScript?
+
+    `Map` is a collection of keyed data items, similar to an object but with keys of any type. `Set` is a collection of values where each value must be unique.
+
+    ```javascript
+    const map = new Map();
+    map.set('key', 'value');
+    console.log(map.get('key')); // "value"
+
+    const set = new Set();
+    set.add(1);
+    set.add(1); // This will not add another 1
+    console.log(set.size); // 1
+    ```
+ **[⬆ Back to Top](#table-of-contents)**
+
+24. ### Explain the concept of "currying" in JavaScript.
+
+    Currying is a technique of evaluating a function with multiple arguments into a sequence of functions with a single argument.
+
+    ```javascript
+    function curry(f) {
+        return function(a) {
+            return function(b) {
+                return f(a, b);
+            };
+        };
+    }
+
+    function sum(a, b) {
+        return a + b;
+    }
+
+    const curriedSum = curry(sum);
+    console.log(curriedSum(1)(2)); // 3
+    ```
+ **[⬆ Back to Top](#table-of-contents)**
+
+25. ### What is the Promise.all method used for?
+
+    `Promise.all` takes an iterable of promises and returns a single Promise that resolves when all of the promises in the iterable have resolved.
+
+    ```javascript
+    const promise1 = Promise.resolve(3);
+    const promise2 = 42;
+    const promise3 = new Promise((resolve, reject) => {
+        setTimeout(resolve, 100, 'foo');
+    });
+
+    Promise.all([promise1, promise2, promise3]).then(values => {
+        console.log(values); // [3, 42, "foo"]
+    });
+    ```
+ **[⬆ Back to Top](#table-of-contents)**
+
+26. ### Explain the concept of "tail call optimization" in JavaScript.
+
+    Tail call optimization is a technique used to optimize recursive functions. If the last thing a function does is call another function, the current function's stack frame is replaced with the new function's stack frame.
+ **[⬆ Back to Top](#table-of-contents)**
+
+27. ### What is the purpose of the eval function in JavaScript?
+
+    `eval` evaluates JavaScript code represented as a string. However, it's generally discouraged due to security and performance reasons.
+
+    ```javascript
+    const x = 10;
+    const code = 'console.log(x * 2)';
+    eval(code); // 20
+    ```
+ **[⬆ Back to Top](#table-of-contents)**
+
+28. ### What is the asyncIterator protocol in JavaScript?
+
+    `asyncIterator` allows you to define custom asynchronous iteration behavior.
+
+    ```javascript
+    const asyncIterable = {
+        [Symbol.asyncIterator]() {
+            let i = 0;
+            return {
+                next() {
+                    if (i < 3) {
+                        return Promise.resolve({ value: i++, done: false });
+                    }
+                    return Promise.resolve({ value: undefined, done: true });
+                }
+            };
+        }
+    };
+
+    (async () => {
+        for await (const num of asyncIterable) {
+            console.log(num);
+        }
+    })();
+    // Output: 0 1 2
+    ```
+ **[⬆ Back to Top](#table-of-contents)**
+
+29. ### What is the purpose of the Intl object in JavaScript?
+
+    The `Intl` object is used for internationalization, providing language-sensitive string comparison, number formatting, and date and time formatting.
+
+    ```javascript
+    const number = 123456.789;
+    const formatter = new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' });
+    console.log(formatter.format(number)); // "123.456,79 €"
+    ```
+ **[⬆ Back to Top](#table-of-contents)**
+
+30. ### Explain the concept of "event delegation" in JavaScript.
+
+    Event delegation is a technique to handle events efficiently by delegating events from multiple child elements to a single parent element.
+
+    ```javascript
+    document.querySelector('#parent').addEventListener('click', function(event) {
+        if (event.target && event.target.matches('button.some-class')) {
+            console.log('Button clicked:', event.target);
+        }
+    });
     ```
  **[⬆ Back to Top](#table-of-contents)**
