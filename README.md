@@ -39,6 +39,16 @@ My Advanced JavaScript Interview Prep : A personal repository of JavaScript inte
 | 28. | [What is the asyncIterator protocol in JavaScript?](#what-is-the-asynciterator-protocol-in-javascript) |
 | 29. | [What is the purpose of the Intl object in JavaScript?](#what-is-the-purpose-of-the-intl-object-in-javascript) |
 | 30. | [Explain the concept of "event delegation" in JavaScript.](#explain-the-concept-of-event-delegation-in-javascript) |
+| 31  | [What is the purpose of the Object.create method?](#what-is-the-purpose-of-the-objectcreate-method) |
+| 32  | [Explain the "module pattern" in JavaScript.](#explain-the-module-pattern-in-javascript) |
+| 33  | [What is a "service worker" in JavaScript?](#what-is-a-service-worker-in-javascript) |
+| 34  | [What is the Blob object in JavaScript?](#what-is-the-blob-object-in-javascript) |
+| 35  | [Explain the concept of "memoization" in JavaScript.](#explain-the-concept-of-memoization-in-javascript) |
+| 36  | [What is the URL object in JavaScript?](#what-is-the-url-object-in-javascript) |
+| 37  | [What is the WeakSet in JavaScript?](#what-is-the-weakset-in-javascript) |
+| 38  | [Explain the concept of "lazy loading" in JavaScript.](#explain-the-concept-of-lazy-loading-in-javascript) |
+| 39  | [What is the purpose of the requestAnimationFrame method?](#what-is-the-purpose-of-the-requestanimationframe-method) |
+| 40  | [What is the difference between innerHTML and textContent?](#what-is-the-difference-between-innerhtml-and-textcontent) |
 
 ---
 
@@ -495,5 +505,159 @@ My Advanced JavaScript Interview Prep : A personal repository of JavaScript inte
             console.log('Button clicked:', event.target);
         }
     });
+    ```
+ **[⬆ Back to Top](#table-of-contents)**
+
+### 31. What is the purpose of the Object.create method?
+
+    Object.create creates a new object with the specified prototype object and properties.
+
+    ```javascript
+    const parent = { greet() { console.log('Hello'); } };
+    const child = Object.create(parent);
+    child.greet(); // "Hello"
+    ```
+ **[⬆ Back to Top](#table-of-contents)**
+
+32. ### Explain the "module pattern" in JavaScript.
+
+   The module pattern is used to create encapsulated modules with private and public members.
+
+    ```javascript
+    const Module = (function() {
+      let privateVar = 'I am private';
+      function privateMethod() {
+        console.log(privateVar);
+      }
+      return {
+        publicMethod() {
+          privateMethod();
+        }
+      };
+    })();
+
+    Module.publicMethod(); // "I am private"
+    ```
+ **[⬆ Back to Top](#table-of-contents)**
+
+33. ### What is a "service worker" in JavaScript?
+
+    A service worker is a script that runs in the background, separate from the web page, enabling features like offline caching, push notifications, and background sync.
+
+    ```javascript
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/service-worker.js')
+            .then(function(registration) {
+                console.log('Service Worker registered with scope:', registration.scope);
+            }).catch(function(error) {
+                console.log('Service Worker registration failed:', error);
+            });
+    }
+    ```
+ **[⬆ Back to Top](#table-of-contents)**
+
+34. ### What is the Blob object in JavaScript?
+
+    A Blob object represents a file-like object of immutable, raw data. Blobs represent data that isn't necessarily in a JavaScript-native format.
+
+    ```javascript
+    const blob = new Blob(['Hello, world!'], { type: 'text/plain' });
+    console.log(blob.size); // 13
+    console.log(blob.type); // "text/plain"
+    ```
+ **[⬆ Back to Top](#table-of-contents)**
+
+35. ### Explain the concept of "memoization" in JavaScript.
+
+    Memoization is an optimization technique that stores the results of expensive function calls and returns the cached result when the same inputs occur again.
+
+    ```javascript
+    function memoize(fn) {
+        const cache = {};
+        return function(...args) {
+            const key = JSON.stringify(args);
+            if (!cache[key]) {
+                cache[key] = fn(...args);
+            }
+            return cache[key];
+        };
+    }
+
+    const factorial = memoize(function(n) {
+        if (n === 0) return 1;
+        return n * factorial(n - 1);
+    });
+
+    console.log(factorial(5)); // 120
+    console.log(factorial(5)); // 120 (cached)
+    ```
+ **[⬆ Back to Top](#table-of-contents)**
+
+36. ### What is the URL object in JavaScript?
+
+    The URL object provides utilities for parsing, constructing, normalizing, and encoding URLs.
+
+    ```javascript
+    const url = new URL('https://example.com/path?name=John&age=30');
+    console.log(url.searchParams.get('name')); // "John"
+    console.log(url.searchParams.get('age')); // "30"
+    ```
+ **[⬆ Back to Top](#table-of-contents)**
+
+37. ### What is the WeakSet in JavaScript?
+
+    WeakSet is a collection of objects where an object in the collection can be garbage collected if there are no other references to it.
+
+    ```javascript
+    let obj = {name: 'John'};
+    const weakSet = new WeakSet();
+    weakSet.add(obj);
+    obj = null; // Now obj is eligible for garbage collection
+    ```
+ **[⬆ Back to Top](#table-of-contents)**
+
+38. ### Explain the concept of "lazy loading" in JavaScript.
+
+    Lazy loading is a design pattern that delays the initialization of a resource until it's actually needed.
+
+    ```javascript
+    function loadScript(src, callback) {
+        const script = document.createElement('script');
+        script.src = src;
+        script.onload = callback;
+        document.head.appendChild(script);
+    }
+
+    loadScript('https://example.com/script.js', function() {
+        console.log('Script loaded!');
+    });
+    ```
+ **[⬆ Back to Top](#table-of-contents)**
+
+39. ### What is the purpose of the `requestAnimationFrame` method?
+
+    `requestAnimationFrame` is used to schedule a function to run before the next repaint, optimizing animations and visual updates.
+
+    ```javascript
+    function animate() {
+        // Animation logic
+        requestAnimationFrame(animate);
+    }
+
+    requestAnimationFrame(animate);
+    ```
+ **[⬆ Back to Top](#table-of-contents)**
+
+40. ### What is the difference between `innerHTML` and `textContent`?
+
+    `innerHTML` parses content as HTML and can be used to insert HTML elements, while `textContent` sets or returns the text content of the specified node.
+
+    ```javascript
+    const element = document.createElement('div');
+    element.innerHTML = '<span>Hello</span>';
+    console.log(element.innerHTML); // "<span>Hello</span>"
+
+    element.textContent = '<span>Hello</span>';
+    console.log(element.textContent); // "<span>Hello</span>"
     ```
  **[⬆ Back to Top](#table-of-contents)**
