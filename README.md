@@ -49,7 +49,16 @@ My Advanced JavaScript Interview Prep : A personal repository of JavaScript inte
 | 38  | [Explain the concept of "lazy loading" in JavaScript.](#explain-the-concept-of-lazy-loading-in-javascript) |
 | 39  | [What is the purpose of the requestAnimationFrame method?](#what-is-the-purpose-of-the-requestanimationframe-method) |
 | 40  | [What is the difference between innerHTML and textContent?](#what-is-the-difference-between-innerhtml-and-textcontent) |
-
+| 41  | [What is the Reflect.construct method?](#what-is-the-reflectconstruct-method) |
+| 42  | [Explain the concept of "higher-order functions" in JavaScript.](#explain-the-concept-of-higher-order-functions-in-javascript) |
+| 43  | [What is Object.defineProperty used for in JavaScript?](#what-is-objectdefineproperty-used-for-in-javascript) |
+| 44  | [What is the purpose of Object.assign?](#what-is-the-purpose-of-objectassign) |
+| 45  | [What is the Proxy object and how is it used?](#what-is-the-proxy-object-and-how-is-it-used) |
+| 46  | [Explain the concept of the "spread operator" in JavaScript.](#explain-the-concept-of-the-spread-operator-in-javascript) |
+| 47  | [What is the IntersectionObserver API?](#what-is-the-intersectionobserver-api) |
+| 48  | [Explain the concept of "function composition" in JavaScript.](#explain-the-concept-of-function-composition-in-javascript) |
+| 49  | [What is the import() function in JavaScript?](#what-is-the-import-function-in-javascript) |
+| 50  | [What is the BigInt type in JavaScript?](#what-is-the-bigint-type-in-javascript) |
 ---
 
 1. ### What is a closure in JavaScript and how is it used?
@@ -659,5 +668,155 @@ My Advanced JavaScript Interview Prep : A personal repository of JavaScript inte
 
     element.textContent = '<span>Hello</span>';
     console.log(element.textContent); // "<span>Hello</span>"
+    ```
+ **[⬆ Back to Top](#table-of-contents)**
+
+41. ### What is the Reflect.construct method?
+
+    Reflect.construct is used to invoke a constructor with a variable number of arguments and returns a new instance.
+
+    ```javascript
+    function Person(name) {
+        this.name = name;
+    }
+
+    const john = Reflect.construct(Person, ['John']);
+    console.log(john.name); // "John"
+    ```
+ **[⬆ Back to Top](#table-of-contents)**
+
+42. ### Explain the concept of "higher-order functions" in JavaScript.
+
+    Higher-order functions are functions that can take other functions as arguments or return them as results.
+
+    ```javascript
+    function higherOrderFunction(callback) {
+        return function(arg) {
+            return callback(arg);
+        };
+    }
+
+    function addOne(x) {
+        return x + 1;
+    }
+
+    const addOneToInput = higherOrderFunction(addOne);
+    console.log(addOneToInput(5)); // 6
+    ```
+ **[⬆ Back to Top](#table-of-contents)**
+
+43. ### What is Object.defineProperty used for in JavaScript?
+
+    Object.defineProperty defines a new property directly on an object, or modifies an existing property.
+
+    ```javascript
+    const obj = {};
+    Object.defineProperty(obj, 'name', {
+        value: 'John',
+        writable: false,
+        enumerable: true,
+        configurable: true
+    });
+
+    console.log(obj.name); // "John"
+    obj.name = 'Doe'; // This will not change the name property
+    console.log(obj.name); // "John"
+    ```
+ **[⬆ Back to Top](#table-of-contents)**
+
+44. ### What is the purpose of Object.assign?
+
+    Object.assign copies all enumerable own properties from one or more source objects to a target object.
+
+    ```javascript
+    const target = { a: 1 };
+    const source = { b: 2, c: 3 };
+    Object.assign(target, source);
+    console.log(target); // { a: 1, b: 2, c: 3 }
+    ```
+ **[⬆ Back to Top](#table-of-contents)**
+
+45. ### What is the Proxy object and how is it used?
+
+    The Proxy object is used to define custom behavior for fundamental operations (e.g., property lookup, assignment, enumeration, function invocation, etc.).
+
+    ```javascript
+    const target = {};
+    const handler = {
+        get: function(obj, prop) {
+            return prop in obj ? obj[prop] : 'Property does not exist';
+        }
+    };
+
+    const proxy = new Proxy(target, handler);
+    console.log(proxy.someProperty); // "Property does not exist"
+    ```
+ **[⬆ Back to Top](#table-of-contents)**
+
+46. ### Explain the concept of the "spread operator" in JavaScript.
+
+    The spread operator (...) allows an iterable to expand in places where multiple arguments or elements are expected.
+
+    ```javascript
+    const arr = [1, 2, 3];
+    const newArr = [...arr, 4, 5];
+    console.log(newArr); // [1, 2, 3, 4, 5]
+
+    const obj = {a: 1, b: 2};
+    const newObj = {...obj, c: 3};
+    console.log(newObj); // {a: 1, b: 2, c: 3}
+    ```
+ **[⬆ Back to Top](#table-of-contents)**
+
+47. ### What is the IntersectionObserver API?
+
+    The IntersectionObserver API provides a way to asynchronously observe changes in the intersection of a target element with an ancestor element or the top-level document's viewport.
+
+    ```javascript
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                console.log('Element is in view');
+            }
+        });
+    }, { threshold: 1.0 });
+
+    observer.observe(document.querySelector('#target'));
+    ```
+ **[⬆ Back to Top](#table-of-contents)**
+
+48. ### Explain the concept of "function composition" in JavaScript.
+
+    Function composition is the process of combining two or more functions to produce a new function.
+
+    ```javascript
+    const add = x => x + 1;
+    const multiply = x => x * 2;
+
+    const addThenMultiply = x => multiply(add(x));
+    console.log(addThenMultiply(5)); // 12
+    ```
+ **[⬆ Back to Top](#table-of-contents)**
+
+49. ### What is the import() function in JavaScript?
+
+    The import() function dynamically imports modules, returning a promise that resolves to the module.
+
+    ```javascript
+    import('./module.js').then(module => {
+        module.someFunction();
+    }).catch(error => {
+        console.error('Error loading module:', error);
+    });
+    ```
+ **[⬆ Back to Top](#table-of-contents)**
+
+50. ### What is the BigInt type in JavaScript?
+
+    BigInt is a built-in object that provides a way to represent whole numbers larger than Number.MAX_SAFE_INTEGER.
+
+    ```javascript
+    const bigInt = 1234567890123456789012345678901234567890n;
+    console.log(bigInt); // 1234567890123456789012345678901234567890n
     ```
  **[⬆ Back to Top](#table-of-contents)**
